@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import TripSerializer,GeocodeSerializer,RouteSerializer
+from .serializers import TripSerializer,GeocodeSerializer,RouteSerializer,PlanTripSerializer
 from .services import geocode,get_route
 from .models import City
+from .application import plan_trip
 class TripsView(APIView):
     def get(self,request):
         return Response({
@@ -69,3 +70,35 @@ class CitiesView(APIView):
             for city in cities
         ])                   
 # Create your views here.
+class PlanTripView(APIView):
+
+    def post(self, request):
+
+        serializer = PlanTripSerializer(
+            data=request.data
+        )
+
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors,
+                status=400
+            )
+
+        data = serializer.validated_data
+
+        try:
+
+            result = plan_trip(
+                data["route"],
+                data["cycleUsed"],
+                data["rules"]
+            )
+
+            return Response(result)
+
+        except ValueError as e:
+
+            return Response(
+                {"error": str(e)},
+                status=400
+            )

@@ -27,3 +27,48 @@ class RouteSerializer(serializers.Serializer):
         min_length=2,
         max_length=2
     )    
+class LegSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    miles = serializers.FloatField()
+    hours = serializers.FloatField()
+    endsWith = serializers.CharField()
+
+
+class PlanRouteSerializer(serializers.Serializer):
+    distanceMiles = serializers.FloatField()
+    drivingHours = serializers.FloatField()
+    legs = LegSerializer(many=True)
+
+
+class LegSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    miles = serializers.FloatField()
+    hours = serializers.FloatField()
+    endsWith = serializers.CharField()
+
+
+class PlanRouteSerializer(serializers.Serializer):
+    distanceMiles = serializers.FloatField()
+    drivingHours = serializers.FloatField()
+    legs = LegSerializer(many=True)
+
+
+class HOSRulesSerializer(serializers.Serializer):
+    maxDrivingHours = serializers.FloatField()
+    maxDutyWindowHours = serializers.FloatField()
+    requiredRestHours = serializers.FloatField()
+    breakAfterDrivingHours = serializers.FloatField()
+    requiredBreakHours = serializers.FloatField()
+    maxCycleHours = serializers.FloatField()
+    restartHours = serializers.FloatField()
+    fuelIntervalMiles = serializers.FloatField()
+    fuelStopHours = serializers.FloatField()
+    pickupHours = serializers.FloatField()
+    dropoffHours = serializers.FloatField()
+    startHour = serializers.FloatField()
+
+
+class PlanTripSerializer(serializers.Serializer):
+    route = PlanRouteSerializer()
+    cycleUsed = serializers.FloatField()
+    rules = HOSRulesSerializer()
