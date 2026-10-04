@@ -143,5 +143,5 @@ MAILERS = {
     },
 }
 CORS_ALLOWED_ORIGINS = [
-    "https://mhm2044510.github.io/TripPlannerFrontend/",
+    "https://mhm2044510.github.io",
 ]
