@@ -78,7 +78,7 @@ def schedule_trip(route, cycle_used, rules):
     def time_off(limit):
         why = get_rule_text(limit, rules)
 
-        if limit == Limit.BREAK:
+        if limit ==H.Limit.BREAK:
             break_mins = int(rules["requiredBreakHours"] * 60)
             log(
                 why,
@@ -93,7 +93,7 @@ def schedule_trip(route, cycle_used, rules):
             )
             clock.take_break(rules["requiredBreakHours"])
 
-        elif limit == Limit.CYCLE:
+        elif limit == H.Limit.CYCLE:
             log(
                 why,
                 f"→ {rules['restartHours']:.0f}-hour restart inserted "
